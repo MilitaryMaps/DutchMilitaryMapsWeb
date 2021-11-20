@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"/>
+
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+
+  <link rel="stylesheet" href="css/leaflet-measure.css">
+  <link rel="stylesheet" href="css/reset.css" type="text/css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <title>Defensielocaties</title>
+</head>
+<body>
+  <div id="map">
+  </div>
+  <script type="text/javascript" src="map/NAVO.geojson"></script>
+  <script type="text/javascript" src="map/DefensieMaterieelOrganisatie.geojson"></script>
+  <script type="text/javascript" src="map/DefensieOndersteuningsCommando.geojson"></script>
+  <script type="text/javascript" src="map/Kantoorcomplexen.geojson"></script>
+  <script type="text/javascript" src="map/KoninklijkeLuchtmacht_Vliegbasissen.geojson"></script>
+  <script type="text/javascript" src="map/KoninklijkeMarine_Kazernes.geojson"></script>
+  <script type="text/javascript" src="map/KoninklijkeMarine_KorpsMariniers_Kazernes.geojson"></script>
+  <script type="text/javascript" src="map/KoninklijkeMarechaussee_Kazernes.geojson"></script>
+  <script type="text/javascript" src="map/KoninklijkeLandmacht_Oefenterreinen.geojson"></script>
+  <script type="text/javascript" src="map/KoninklijkeLandmacht_Kazernes.geojson"></script>
+  <script type="text/javascript" src="map/Munitiemagazijncomplexen.geojson"></script>
+  <script type="text/javascript" src="map/Logistieke_complexen.geojson"></script>
+  <script type="text/javascript" src="map/MC.geojson"></script>
+  <script type="text/javascript" src="map/Radarstations.geojson"></script>
+  <script type="text/javascript" src="map/BrandstofDepots.geojson"></script>
+  <script type="text/javascript" src="map/Communicatie_Complexen.geojson"></script>
+
+
+  <script src="js/leaflet-measure.js"></script>
+  <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+
+  <script type="text/javascript">
+
+    const debug = true;
+
+    function FeaturesLayers(feature, layer) {
+      layer.bindTooltip(feature.properties.Name, {
+        className: "defensie_locatie_label",
+        direction: "center",
+        permanent: true,
+        closeButton: false,
+        opacity: 1
+      }).openTooltip().on('click', function(event) {
+          map.fitBounds(layer.getBounds());
+      });
+    };
+
+    function FeaturesLayersStyle(feature, layer) {
+      return {
+              className: "defensie_locatie",
+            };
+    };
+
+
+    options = {onEachFeature: FeaturesLayers, style: FeaturesLayersStyle};
+    const NAVO                                        = L.geoJson(NAVO_map, options);
+    const DefensieMaterieelOrganisatie                = L.geoJson(DefensieMaterieelOrganisatie_map, options);
+    const DefensieOndersteuningsCommando              = L.geoJson(DefensieOndersteuningsCommando_map, options);
+    const Kantoorcomplexen                            = L.geoJson(Kantoorcomplexen_map, options);
+    const KoninklijkeLuchtmacht_Vliegbasissen         = L.geoJson(KoninklijkeLuchtmacht_Vliegbasissen_map, options);
+    const KoninklijkeMarine_Kazernes                  = L.geoJson(KoninklijkeMarine_Kazernes_map, options);
+    const KoninklijkeMarine_KorpsMariniers_Kazernes   = L.geoJson(KoninklijkeMarine_KorpsMariniers_Kazernes_map, options);
+    const KoninklijkeMarechaussee_Kazernes            = L.geoJson(KoninklijkeMarechaussee_Kazernes_map, options);
+    const KoninklijkeLandmacht_Oefenterreinen         = L.geoJson(KoninklijkeLandmacht_Oefenterreinen_map, options);
+    const KoninklijkeLandmacht_Kazernes               = L.geoJson(KoninklijkeLandmacht_Kazernes_map, options);
+    const Munitiemagazijncomplexen                    = L.geoJson(Munitiemagazijncomplexen_map, options);
+    const Logistieke_complexen                        = L.geoJson(Logistieke_complexen_map, options);
+    const MC                                           = L.geoJson(MC_map, options);
+    const Radarstations                               = L.geoJson(Radarstations_map, options);
+    const BrandstofDepots                             = L.geoJson(BrandstofDepots_map, options);
+    const Communicatie_Complexen                      = L.geoJson(Communicatie_Complexen_map, options);
+
+    const BasisKaart = L.tileLayer("https://api.mapbox.com/styles/v1/paddowonderland/ck7rzkeer2tew1ip10em103r3/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGFkZG93b25kZXJsYW5kIiwiYSI6ImNrN3J6NWp3MjBiMzkzb21yeXp2b2FubjEifQ.EY3uhB3fvOcmpHBcFMfajw"),
+          BasisKaartSatteliet = L.tileLayer("https://api.mapbox.com/styles/v1/paddowonderland/ck7s0n25i2zve1iqa9zduq7um/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGFkZG93b25kZXJsYW5kIiwiYSI6ImNrN3J6NWp3MjBiMzkzb21yeXp2b2FubjEifQ.EY3uhB3fvOcmpHBcFMfajw");
+
+
+
+    const map = L.map("map", {
+        center: [52.062100, 4.919369],
+        zoom: 8,
+        minZoom: 4,
+        maxZoom: 18,
+        zoomControl: false,
+        doubleClickZoom: false,
+        attributionControl: false,
+        layers: [
+            BasisKaart,
+            NAVO,
+            DefensieMaterieelOrganisatie,
+            DefensieOndersteuningsCommando,
+            Kantoorcomplexen,
+            KoninklijkeLuchtmacht_Vliegbasissen,
+            KoninklijkeMarine_Kazernes,
+            KoninklijkeMarine_KorpsMariniers_Kazernes,
+            KoninklijkeMarechaussee_Kazernes,
+            KoninklijkeLandmacht_Oefenterreinen,
+            KoninklijkeLandmacht_Kazernes,
+            Munitiemagazijncomplexen,
+            Logistieke_complexen,
+            MC,
+            Radarstations,
+            BrandstofDepots,
+            Communicatie_Complexen
+          ]
+    });
+
+    const baseMaps = {
+        "Basis Kaart": BasisKaart,
+        "Satteliet": BasisKaartSatteliet
+    };
+
+
+
+    const overlayMaps = {
+        "KLU VLB" : KoninklijkeLuchtmacht_Vliegbasissen,
+        "KM KAZ" : KoninklijkeMarine_Kazernes,
+        "MARNS KAZ" : KoninklijkeMarine_KorpsMariniers_Kazernes,
+        "KMAR KAZ" : KoninklijkeMarechaussee_Kazernes,
+        "KL KAZ" : KoninklijkeLandmacht_Kazernes,
+        "OT" : KoninklijkeLandmacht_Oefenterreinen,
+
+        "DMO" : DefensieMaterieelOrganisatie,
+        "DOC" : DefensieOndersteuningsCommando,
+        "DPO" : BrandstofDepots,
+
+        "MMC" : Munitiemagazijncomplexen,
+        "MC" : MC,
+        "LC" : Logistieke_complexen,
+
+        "Kantorencomplexen" : Kantoorcomplexen,
+
+        "Radarstations" : Radarstations,
+        "Communicatie Complexen" : Communicatie_Complexen,
+
+        "NAVO": NAVO,
+    };
+
+
+    const osmGeocoder = new L.Control.Geocoder({
+        collapsed: false,
+        position: 'topleft',
+        placeholder: 'Zoeken...',
+        errorMessage: 'Niets gevonden'
+    }).addTo(map);
+    document.getElementsByClassName('leaflet-control-geocoder-icon')[0].className += ' fa fa-search';
+    document.getElementsByClassName('leaflet-control-geocoder-icon')[0].title += 'Zoeken';
+
+    const measureControl = new L.Control.Measure({
+        position: 'topleft',
+        primaryLengthUnit: 'meter',
+        secondaryLengthUnit: 'kilometer',
+        primaryAreaUnit: 'm2',
+        secondaryAreaUnit: 'hectare'
+    });
+    measureControl.addTo(map);
+    document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+    .innerHTML = '';
+    document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+    .className += ' fas fa-ruler';
+
+    L.control.layers(baseMaps, overlayMaps, {collapsed: false}).addTo(map);
+    L.control.scale({metric: true}).addTo(map);
+
+    map.on('zoomend', function() {
+      let zoomLevel = map.getZoom();
+      console.log(zoomLevel);
+      switch (zoomLevel) {
+        case 5: $(".defensie_locatie_label").css({"font-size": zoomLevel+"px"}); break;
+        case 6: $(".defensie_locatie_label").css({"font-size": zoomLevel+"px"}); break;
+        case 7: $(".defensie_locatie_label").css({"font-size": zoomLevel+"px"}); break;
+        case 8: $(".defensie_locatie_label").css({"font-size": zoomLevel+"px"}); break;
+        case 9: $(".defensie_locatie_label").css({"font-size": zoomLevel+"px"}); break;
+        case 10: $(".defensie_locatie_label").css({"font-size": parseInt(zoomLevel+3)+"px"}); break;
+        case 11: $(".defensie_locatie_label").css({"font-size": parseInt(zoomLevel+4)+"px"}); break;
+        case 12: $(".defensie_locatie_label").css({"font-size": parseInt(zoomLevel+5)+"px"}); break;
+        case 13: $(".defensie_locatie_label").css({"font-size": parseInt(zoomLevel+6)+"px"}); break;
+        case 14: $(".defensie_locatie_label").css({"font-size": parseInt(zoomLevel+7)+"px"}); break;
+        case 15: $(".defensie_locatie_label").css({"font-size": parseInt(zoomLevel+8)+"px"}); break;
+        case 16: $(".defensie_locatie_label").css({"font-size": parseInt(zoomLevel+9)+"px"}); break;
+        case 17: $(".defensie_locatie_label").css({"font-size": parseInt(zoomLevel+10)+"px"}); break;
+        case 18: $(".defensie_locatie_label").css({"font-size": parseInt(zoomLevel+11)+"px"}); break;
+        default: $(".defensie_locatie_label").css({"font-size": "10px"}); break;
+      }
+
+
+    });
+  </script>
+</body>
+</html>
