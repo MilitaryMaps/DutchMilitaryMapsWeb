@@ -50,7 +50,8 @@
         direction: "center",
         permanent: true,
         closeButton: false,
-        opacity: 1
+        opacity: 1,
+        interactive: true
       }).openTooltip().on('click', function(event) {
           map.fitBounds(layer.getBounds());
       });
@@ -174,7 +175,6 @@
 
     map.on('zoomend', function() {
       let zoomLevel = map.getZoom();
-      console.log(zoomLevel);
       switch (zoomLevel) {
         case 5: $(".defensie_locatie_label").css({"font-size": zoomLevel+"px"}); break;
         case 6: $(".defensie_locatie_label").css({"font-size": zoomLevel+"px"}); break;
