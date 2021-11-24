@@ -18,7 +18,7 @@
 <body>
   <div id="map">
   </div>
-  <div class="version_mark">Version: 20112021</div>
+  <div class="version_mark">Version: 24112021</div>
   <script type="text/javascript" src="map/NAVO.geojson"></script>
   <script type="text/javascript" src="map/DefensieMaterieelOrganisatie.geojson"></script>
   <script type="text/javascript" src="map/DefensieOndersteuningsCommando.geojson"></script>
@@ -77,12 +77,12 @@
     const KoninklijkeLandmacht_Kazernes               = L.geoJson(KoninklijkeLandmacht_Kazernes_map, options);
     const Munitiemagazijncomplexen                    = L.geoJson(Munitiemagazijncomplexen_map, options);
     const Logistieke_complexen                        = L.geoJson(Logistieke_complexen_map, options);
-    const MC                                           = L.geoJson(MC_map, options);
+    const MC                                          = L.geoJson(MC_map, options);
     const Radarstations                               = L.geoJson(Radarstations_map, options);
     const BrandstofDepots                             = L.geoJson(BrandstofDepots_map, options);
     const Communicatie_Complexen                      = L.geoJson(Communicatie_Complexen_map, options);
 
-    const BasisKaart = L.tileLayer("https://api.mapbox.com/styles/v1/paddowonderland/ck7rzkeer2tew1ip10em103r3/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGFkZG93b25kZXJsYW5kIiwiYSI6ImNrN3J6NWp3MjBiMzkzb21yeXp2b2FubjEifQ.EY3uhB3fvOcmpHBcFMfajw"),
+    const BasisKaart = L.tileLayer("https://api.mapbox.com/styles/v1/rickthesaxon/ckwaqi31o1gqm15od9hbn5xj2/tiles/512/{z}/{x}/{y}@2x?access_token=pk.eyJ1Ijoicmlja3RoZXNheG9uIiwiYSI6ImNrd2FxZmhsYjNjeXcybnJvdmF0YTlrN3oifQ.HBaSH6YQo3tx-6ZUvy5y_g"),
           BasisKaartSatteliet = L.tileLayer("https://api.mapbox.com/styles/v1/paddowonderland/ck7s0n25i2zve1iqa9zduq7um/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoicGFkZG93b25kZXJsYW5kIiwiYSI6ImNrN3J6NWp3MjBiMzkzb21yeXp2b2FubjEifQ.EY3uhB3fvOcmpHBcFMfajw");
 
 
