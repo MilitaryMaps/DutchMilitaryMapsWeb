@@ -18,7 +18,7 @@
 <body>
   <div id="map">
   </div>
-  <div class="version_mark">Version: 24112021</div>
+  <div class="version_mark">Version: 11042022</div>
   <script type="text/javascript" src="map/NAVO.geojson"></script>
   <script type="text/javascript" src="map/DefensieMaterieelOrganisatie.geojson"></script>
   <script type="text/javascript" src="map/DefensieOndersteuningsCommando.geojson"></script>
@@ -52,8 +52,8 @@
         closeButton: false,
         opacity: 1,
         interactive: true
-      }).openTooltip().on('click', function(event) {
-          map.fitBounds(layer.getBounds());
+      }).openTooltip().on('click', function(e) {
+        map.fitBounds(layer.getBounds());
       });
     };
 
